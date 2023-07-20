@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import com.example.tmdbclient.domain.usecases.GetTvShowUseCase
 import com.example.tmdbclient.domain.usecases.UpdateTvShowUseCase
+import javax.inject.Inject
 
 class TvShowViewModel(
     private val getTvShowUseCase: GetTvShowUseCase,

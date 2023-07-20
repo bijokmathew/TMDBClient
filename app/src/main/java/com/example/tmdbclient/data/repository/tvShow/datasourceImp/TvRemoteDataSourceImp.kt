@@ -10,5 +10,7 @@ class TvRemoteDataSourceImp(
     private val tmdbService: TMDBService,
     private val api_key:String
     ):TvRemoteDataSource {
-    override suspend fun getTvShows(): Response<TvShowList> = tmdbService.getPopularTvShows(api_key)
+    override suspend fun getTvShows(): Response<TvShowList> {
+        return tmdbService.getPopularTvShows(api_key)
+    }
 }

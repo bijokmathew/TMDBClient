@@ -17,7 +17,9 @@ class DatabaseModule {
     @Singleton
     @Provides
     fun provideTMDBDatabase(context: Context):TMDBDatabase{
-        return Room.databaseBuilder(context,TMDBDatabase::class.java,"TMDB_db").build()
+        return Room.databaseBuilder(context,TMDBDatabase::class.java,"TMDB_db")
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Singleton

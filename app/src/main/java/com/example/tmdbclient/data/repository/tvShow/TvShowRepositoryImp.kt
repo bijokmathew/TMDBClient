@@ -28,13 +28,18 @@ class TvShowRepositoryImp(
     private suspend fun getTvShowsFromApi():List<TvShow>{
         lateinit var tvShowLists:List<TvShow>
         try {
+            Log.i("MyTag  "," getTvShowsFromApi tvRemoteDataSource = ${tvRemoteDataSource}")
             val response = tvRemoteDataSource.getTvShows()
+            Log.i("MyTag  "," getTvShowsFromApi response = ${response.toString()}")
             val body:TvShowList? = response.body()
-            if(body!=null){
+            Log.i("MyTag  "," getTvShowsFromApi body = ${body}")
+            if(body != null){
                 tvShowLists = body.tvShows
             }
         } catch (e:Exception){
-            Log.i("MyTag", e.message.toString())
+            Log.i("MyTag ","getTvShowsFromApi"+e.stackTrace.toString())
+            Log.i("MyTag ","getTvShowsFromApi"+e.toString())
+            Log.i("MyTag ","getTvShowsFromApi"+e.printStackTrace())
         }
         return tvShowLists
     }
@@ -49,7 +54,7 @@ class TvShowRepositoryImp(
                 tvLocalDataSource.saveTvShows(tvShowlists)
             }
         } catch (e:Exception){
-            Log.i("MyTag",e.message.toString())
+            Log.i("MyTag getTvShowsFromDB",e.message.toString())
         }
         return tvShowlists
     }
@@ -64,7 +69,7 @@ class TvShowRepositoryImp(
                 tvCacheDataSource.saveTvShowsToCache(tvShowlists)
             }
         } catch (e:Exception) {
-            Log.i("MyTag",e.message.toString())
+            Log.i("MyTag getTvShowsFromDB",e.message.toString())
         }
         return tvShowlists
     }

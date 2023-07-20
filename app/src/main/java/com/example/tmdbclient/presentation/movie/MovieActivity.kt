@@ -3,6 +3,9 @@ package com.example.tmdbclient.presentation.movie
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -29,6 +32,23 @@ class MovieActivity : AppCompatActivity() {
         initRecyclerView()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflator:MenuInflater = menuInflater
+        inflator.inflate(R.menu.update,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.action_update -> {
+                updateMovies()
+                true
+            } else ->{
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
     fun initRecyclerView(){
         binding.movieRecyclerViewe.layoutManager = LinearLayoutManager(this)
         adaptor = MovieAdaptor()
@@ -36,6 +56,23 @@ class MovieActivity : AppCompatActivity() {
         displayMovies()
     }
 
+    fun updateMovies(){
+        binding.progressBar.visibility = View.VISIBLE
+        val result = movieViewModel.updateMovies()
+        result.observe(
+            this,
+            Observer {
+                if(it != null){
+                    binding.progressBar.visibility = View.GONE
+                    adaptor.setList(it)
+                    adaptor.notifyDataSetChanged()
+                }else{
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(this,"Sorry No data found !!", Toast.LENGTH_LONG).show()
+                }
+            }
+        )
+    }
     fun displayMovies(){
         binding.progressBar.visibility = View.VISIBLE
         val result = movieViewModel.getMovies().observe(
