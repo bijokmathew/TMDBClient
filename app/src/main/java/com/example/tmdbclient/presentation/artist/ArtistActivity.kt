@@ -2,6 +2,8 @@ package com.example.tmdbclient.presentation.artist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -28,6 +30,39 @@ class ArtistActivity : AppCompatActivity() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.update,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        return when(item.itemId) {
+            R.id.action_update -> {
+                updateArtistItem()
+                true
+            }else->{
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
+    fun updateArtistItem(){
+        binding.artistProgressBar.visibility = View.VISIBLE
+        viewModel.updateArtists().observe(
+            this,
+            Observer {
+                if (it != null) {
+                    adaptor.setList(it)
+                    adaptor.notifyDataSetChanged()
+                    binding.artistProgressBar.visibility = View.GONE
+                } else {
+                    Toast.makeText(this, "No data Found", Toast.LENGTH_LONG).show()
+                    binding.artistProgressBar.visibility = View.GONE
+                }
+            }
+        )
+    }
     fun initRecyclerView(){
         binding.artistRecyclerView.layoutManager = LinearLayoutManager(this@ArtistActivity)
         adaptor = ArtistAdaptor()
