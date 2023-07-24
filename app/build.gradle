@@ -8,16 +8,23 @@ android {
     namespace 'com.example.tmdbclient'
     compileSdk 33
 
+
     defaultConfig {
         applicationId "com.example.tmdbclient"
         minSdk 27
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        kapt{
+            arguments{
+                arg("room.schemaLocation","$projectDir/schemas")
+            }
+        }
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField 'String', "API_KEY", '"0218fed228907eb43332288afdd789fa"'
         buildConfigField 'String', "BASE_URL", '"https://api.themoviedb.org/3/"'
+
     }
 
     buildTypes {
@@ -48,6 +55,7 @@ dependencies {
     def logging_interceptor_version = "4.11.0"
     def dagger_version = "2.47"
     def glide_version = "4.15.1"
+    def arch_version = "2.2.0"
 
     //glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
@@ -89,4 +97,16 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+    testImplementation "androidx.room:room-testing:$room_version"
+    androidTestImplementation "androidx.arch.core:core-testing:2.0.0"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
+    //hh
+    androidTestImplementation "com.google.truth:truth:1.1.4"
+
+
+    testImplementation "com.google.truth:truth:1.1.4"
+    testImplementation "androidx.arch.core:core-testing:2.0.0"
+    testImplementation 'org.robolectric:robolectric:4.4'
+    testImplementation 'androidx.test.ext:junit:1.1.5'
 }

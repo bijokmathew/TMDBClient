@@ -18,7 +18,6 @@ class DatabaseModule {
     @Provides
     fun provideTMDBDatabase(context: Context):TMDBDatabase{
         return Room.databaseBuilder(context,TMDBDatabase::class.java,"TMDB_db")
-            .fallbackToDestructiveMigration()
             .build()
     }
 
